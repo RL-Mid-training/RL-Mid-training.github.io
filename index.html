@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-12-20 Sat 08:36 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reinforcement Learning Mid-Training for LLMs</title>
+<meta name="author" content="linc5532" />
+<meta name="description" content="Domain-Agnostic RL Training on Unstructured Documents" />
+<meta name="keywords" content="homepage, website, research, AI, reinforcement learning, LLM" />
+<meta name="generator" content="Org Mode" />
+<script src="https://kit.fontawesome.com/1eb1a53221.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="./style.css"/>
+<link rel="icon" type="image/x-icon" href="imgs/favicon.ico">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+<link rel="stylesheet" type="text/css" href="utils/style.css"/>
+<link rel="stylesheet" type="text/css" href="utils/bootstrap.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+<script src="utils/app.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<div id="main" class="container">
+
+<p>
+<div class="row"><h2 class="col-md-12 text-center"><strong><font size="+2r" color="red">Work In Progress, DO NOT DISTRIBUTE</font></strong></h2></div><br />
+<div class="row"><h2 class="col-md-12 text-center"><strong><font size="+4r">  Reinforcement Learning Mid-Training for LLMs  </font></strong></h2></div><br />
+</p>
+
+
+<div class="row"> <div class="col-md-12 text-center">
+<ul class="org-ul list-inline">
+<li>Eltayeb Ahmed<br /></li>
+<li>Anya Sims<br /></li>
+<li>Thomas Foster<br /></li>
+<li>Jakob Foerster<br /></li>
+</ul>
+</div> </div>
+
+
+<div class="row"> <div class="col-md-12 text-center">
+<ul class="org-ul list-inline">
+<li><image src="imgs/oxford_logo.png" height="48px"><br /></li>
+<li><image src="imgs/flair_logo.png" height="48px"><br /></li>
+</ul>
+</div> </div>
+
+
+<div class="row"> <div class="col-md-4 col-md-offset-4 text-center">
+</div></div>
+
+<div class="row"> <div class="col-md-8 col-md-offset-2">
+
+<p>
+*<br />
+</p>
+
+
+<div id="org96aba2c" class="figure">
+<p><img src="figures/param_scaling_400.jpg" alt="param_scaling_400.jpg" width="100%" /><br />
+</p>
+</div>
+
+<blockquote>
+<p>
+TL;DR: We present <b>RLM (Reinforcement Learning Mid-Training)</b>, a novel domain-agnostic method that enables RL training on datasets of unstructured documents. This breakthrough allows us to use <b>multi-billion data-point datasets</b> for RL training without requiring expensive curated data with verifiable rewards. RLM scales well with both parameters and data, opening the door to training reasoning models beyond mathematics and code.<br />
+</p>
+</blockquote>
+<div id="outline-container-org1dbdee7" class="outline-2">
+<h2 id="org1dbdee7">Abstract</h2>
+<div class="outline-text-2" id="text-org1dbdee7">
+<p>
+Training LLMs with RL for reasoning capability is currently data limited. The high-quality curated data with "verifiable rewards" that is traditionally required for post-training is prohibitively expensive at scale. We present a novel domain-agnostic method to use datasets of unstructured documents for RL training. Now, pre-existing multi-billion data-point datasets can be used for RL training for reasoning.<br />
+</p>
+
+<p>
+We show that our method scales well both with parameters and with data, increasing model capabilities. Our approach involves corrupting documents and training models to restore them, using this as a reinforcement learning task. This simple yet effective technique allows us to scale reasoning datasets to hundreds of millions of data-points, far beyond existing reasoning benchmarks which contain only tens of thousands of samples.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-org8dd7753" class="outline-2">
+<h2 id="org8dd7753">Method Overview</h2>
+<div class="outline-text-2" id="text-org8dd7753">
+<p>
+The current state-of-the-art for training reasoning models involves doing reinforcement learning on problems with verifiable rewards such as maths and code competition problems. This limits our ability to train reasoning models with strong abilities outside mathematical and computational domains.<br />
+</p>
+
+<p>
+<b>RLM</b> can take an arbitrary corpus of documents—consisting of unstructured text, articles, papers, forum discussions, etc.—and use the corpus as data for reinforcement learning, improving a model's ability to reason without bespoke post-training data.<br />
+</p>
+
+<p>
+We do this by:<br />
+</p>
+<div class="step2bullets">
+<ol class="org-ol">
+<li><b>Corrupting documents</b> by masking a random contiguous portion (up to 30%) of each document<br /></li>
+<li><b>Proposing un-corruption</b> as a task to the LLM during training<br /></li>
+<li><b>Applying reinforcement learning</b> to optimize the model's ability to restore the original documents<br /></li>
+</ol>
+</div>
+
+<p>
+This approach is domain-agnostic and allows us to leverage vast amounts of existing textual data for training reasoning capabilities.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-org5762251" class="outline-2">
+<h2 id="org5762251">Scaling Results</h2>
+<div class="outline-text-2" id="text-org5762251">
+<img src="figures/performance_0_500_run.jpg" style="width:100%;image-rendering:auto;">
+
+<p>
+<b>Parameter Scaling:</b> We trained models ranging from 1.7B to 8B parameters. Our method shows consistent improvements across all model sizes on a wide range of benchmarks including MMLU, OpenCompass, GSM8K, GPQA, Hendrycks/APPS, LiveCodeBench, and MATH.<br />
+</p>
+
+<p>
+<b>Data Scaling:</b> We demonstrate that model performance increases as we expose models to more data over the course of RLM training. Our largest run scaled up to 128,000 documents and utilized over 4,000 GPU-hours on Isambard.<br />
+</p>
+
+<img src="figures/train_reward.png" style="width:100%;image-rendering:auto;">
+
+<p>
+<b>Scaling Laws:</b> The in-task performance on the RLM objective scales linearly with log-compute, reminiscent of pre-training cross-entropy scaling laws. This is a crucial finding, as pre-training scaling characteristics have been the biggest driver of recent LLM development.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-orgfd540d4" class="outline-2">
+<h2 id="orgfd540d4">Post-Training Benefits</h2>
+<div class="outline-text-2" id="text-orgfd540d4">
+<img src="figures/math_post_training.jpg" style="width:100%;image-rendering:auto;">
+
+<p>
+RLM provides benefits even when followed by post-training. We show that:<br />
+</p>
+<ul class="org-ul">
+<li>Models with RLM + post-training outperform post-training alone across all model sizes<br /></li>
+<li>RLM increases the saturation point of post-training, making it beneficial even with unlimited post-training compute<br /></li>
+<li>This suggests the scarcity of post-training data is a fundamental bottleneck that RLM helps address<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org83ea116" class="outline-2">
+<h2 id="org83ea116">Key Findings</h2>
+<div class="outline-text-2" id="text-org83ea116">
+<p>
+We conducted ablation studies on the Qwen3-8B reasoning model showing that:<br />
+</p>
+
+<table border="1" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Benchmark</th>
+<th scope="col" class="org-right">Qwen3-8B</th>
+<th scope="col" class="org-right">Qwen3-8B + SFT</th>
+<th scope="col" class="org-left">Qwen3-8B + RLM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">AIME 2024</td>
+<td class="org-right">33.3%</td>
+<td class="org-right">23.3%</td>
+<td class="org-left"><b>43.3%</b></td>
+</tr>
+
+<tr>
+<td class="org-left">CNMO 2024</td>
+<td class="org-right">44.0%</td>
+<td class="org-right">27.7%</td>
+<td class="org-left"><b>55.5%</b></td>
+</tr>
+
+<tr>
+<td class="org-left">GPQA</td>
+<td class="org-right">44.7%</td>
+<td class="org-right">43.7%</td>
+<td class="org-left"><b>57.9%</b></td>
+</tr>
+
+<tr>
+<td class="org-left">MATH</td>
+<td class="org-right">84.6%</td>
+<td class="org-right">82.5%</td>
+<td class="org-left"><b>85.1%</b></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Importantly, we found that supervised fine-tuning (SFT) on documents without reasoning structure actually <b>harms</b> reasoning capabilities, while RLM consistently improves performance.<br />
+</p>
+
+
+</div></div>
+
+</div></div>
+
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+<h3>Citation</h3>
+<div class="form-group col-md-10 col-md-offset-1"><textarea id="bibtex" class="form-control" readonly>
+@misc{rlm2025,
+      title={Reinforcement Learning Mid-Training for LLMs},
+      author={Eltayeb Ahmed and Anya Sims and Thomas Foster and Jakob Foerster},
+      year={2025}
+}</textarea>
+</div></div>
+
+
+
+<div class="row"><div class="col-md-8 col-md-offset-2"><p class="text-justify">
+<br><br>
+The website template was borrowed from <a href="http://easyacademicwebsite.github.io">Easy Academic Website Template</a> and <a href="http://jonbarron.info/">Jon Barron</a>.
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>
