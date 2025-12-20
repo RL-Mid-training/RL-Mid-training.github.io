@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-12-20 Sat 08:36 -->
+<!-- 2025-12-20 Sat 13:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Reinforcement Learning Mid-Training for LLMs</title>
@@ -40,6 +40,7 @@
 <li>Eltayeb Ahmed<br /></li>
 <li>Anya Sims<br /></li>
 <li>Thomas Foster<br /></li>
+<li>Tim Rocktäschel<br /></li>
 <li>Jakob Foerster<br /></li>
 </ul>
 </div> </div>
@@ -63,19 +64,19 @@
 </p>
 
 
-<div id="org96aba2c" class="figure">
+<div id="org4a6938a" class="figure">
 <p><img src="figures/param_scaling_400.jpg" alt="param_scaling_400.jpg" width="100%" /><br />
 </p>
 </div>
 
 <blockquote>
 <p>
-TL;DR: We present <b>RLM (Reinforcement Learning Mid-Training)</b>, a novel domain-agnostic method that enables RL training on datasets of unstructured documents. This breakthrough allows us to use <b>multi-billion data-point datasets</b> for RL training without requiring expensive curated data with verifiable rewards. RLM scales well with both parameters and data, opening the door to training reasoning models beyond mathematics and code.<br />
+TL;DR: We present <b>RLM (Reinforcement Learning Mid-Training)</b>, a novel domain-agnostic method that enables RL training on datasets of unstructured documents. This breakthrough allows us to use <b>multi-billion data-point datasets</b> for RL training without requiring expensive curated data with verifiable rewards. RLM scales well with both parameters and data and opens the door to RL reasoning training at unprecedented scale.<br />
 </p>
 </blockquote>
-<div id="outline-container-org1dbdee7" class="outline-2">
-<h2 id="org1dbdee7">Abstract</h2>
-<div class="outline-text-2" id="text-org1dbdee7">
+<div id="outline-container-org0053017" class="outline-2">
+<h2 id="org0053017">Abstract</h2>
+<div class="outline-text-2" id="text-org0053017">
 <p>
 Training LLMs with RL for reasoning capability is currently data limited. The high-quality curated data with "verifiable rewards" that is traditionally required for post-training is prohibitively expensive at scale. We present a novel domain-agnostic method to use datasets of unstructured documents for RL training. Now, pre-existing multi-billion data-point datasets can be used for RL training for reasoning.<br />
 </p>
@@ -85,9 +86,9 @@ We show that our method scales well both with parameters and with data, increasi
 </p>
 </div>
 </div>
-<div id="outline-container-org8dd7753" class="outline-2">
-<h2 id="org8dd7753">Method Overview</h2>
-<div class="outline-text-2" id="text-org8dd7753">
+<div id="outline-container-org3dc8c08" class="outline-2">
+<h2 id="org3dc8c08">Method Overview</h2>
+<div class="outline-text-2" id="text-org3dc8c08">
 <p>
 The current state-of-the-art for training reasoning models involves doing reinforcement learning on problems with verifiable rewards such as maths and code competition problems. This limits our ability to train reasoning models with strong abilities outside mathematical and computational domains.<br />
 </p>
@@ -112,44 +113,41 @@ This approach is domain-agnostic and allows us to leverage vast amounts of exist
 </p>
 </div>
 </div>
-<div id="outline-container-org5762251" class="outline-2">
-<h2 id="org5762251">Scaling Results</h2>
-<div class="outline-text-2" id="text-org5762251">
-<img src="figures/performance_0_500_run.jpg" style="width:100%;image-rendering:auto;">
-
+<div id="outline-container-org872822b" class="outline-2">
+<h2 id="org872822b">Data Scaling</h2>
+<div class="outline-text-2" id="text-org872822b">
 <p>
-<b>Parameter Scaling:</b> We trained models ranging from 1.7B to 8B parameters. Our method shows consistent improvements across all model sizes on a wide range of benchmarks including MMLU, OpenCompass, GSM8K, GPQA, Hendrycks/APPS, LiveCodeBench, and MATH.<br />
+Post-training curves starting from models without mid-training (blue), with 200 steps of mid-training (orange), and with 400 steps of mid-training (red). We find that mid-training increases performance across post-training, over a wide range of benchmarks (math, general knowledge, and code).<br />
 </p>
 
+<img src="figures/data_scaling.png" style="width:100%;image-rendering:auto;">
+
 <p>
-<b>Data Scaling:</b> We demonstrate that model performance increases as we expose models to more data over the course of RLM training. Our largest run scaled up to 128,000 documents and utilized over 4,000 GPU-hours on Isambard.<br />
+We trained models ranging from 1.7B to 8B parameters. Our method shows consistent improvements across all model sizes on a wide range of benchmarks including MMLU, OpenCompass, GSM8K, GPQA, Hendrycks/APPS, LiveCodeBench, and MATH. We demonstrate that model performance increases as we expose models to more data over the course of RLM training. Our largest run scaled up to 128,000 documents and utilized over 4,000 GPU-hours on Isambard.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-orga108e82" class="outline-2">
+<h2 id="orga108e82">In-Task Scaling</h2>
+<div class="outline-text-2" id="text-orga108e82">
+<p>
+After a few warm-up steps, we see the in-task performance on the RLM reward scales linearly with log-compute, reminiscent of pre-training cross-entropy scaling laws. This is a very promising result as the scaling characteristics of pre-training have been driving the explosion in LLM capabilities.<br />
 </p>
 
 <img src="figures/train_reward.png" style="width:100%;image-rendering:auto;">
-
+</div>
+</div>
+<div id="outline-container-org75db9f9" class="outline-2">
+<h2 id="org75db9f9">Post-Training Saturation</h2>
+<div class="outline-text-2" id="text-org75db9f9">
 <p>
-<b>Scaling Laws:</b> The in-task performance on the RLM objective scales linearly with log-compute, reminiscent of pre-training cross-entropy scaling laws. This is a crucial finding, as pre-training scaling characteristics have been the biggest driver of recent LLM development.<br />
+Examining the post-training progression in the figure above, we observe that improvements from post-training alone (blue line) eventually saturate. Critically, RLM raises this saturation point—with both 200 steps (orange) and 400 steps (red) of mid-training achieving higher performance ceilings. This demonstrates that RLM provides substantial benefits even in scenarios with unlimited post-training compute budgets, addressing a fundamental scaling limitation of conventional post-training approaches.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgfd540d4" class="outline-2">
-<h2 id="orgfd540d4">Post-Training Benefits</h2>
-<div class="outline-text-2" id="text-orgfd540d4">
-<img src="figures/math_post_training.jpg" style="width:100%;image-rendering:auto;">
-
-<p>
-RLM provides benefits even when followed by post-training. We show that:<br />
-</p>
-<ul class="org-ul">
-<li>Models with RLM + post-training outperform post-training alone across all model sizes<br /></li>
-<li>RLM increases the saturation point of post-training, making it beneficial even with unlimited post-training compute<br /></li>
-<li>This suggests the scarcity of post-training data is a fundamental bottleneck that RLM helps address<br /></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org83ea116" class="outline-2">
-<h2 id="org83ea116">Key Findings</h2>
-<div class="outline-text-2" id="text-org83ea116">
+<div id="outline-container-org49bdcfb" class="outline-2">
+<h2 id="org49bdcfb">Why SFT isn't Enough</h2>
+<div class="outline-text-2" id="text-org49bdcfb">
 <p>
 We conducted ablation studies on the Qwen3-8B reasoning model showing that:<br />
 </p>
@@ -220,7 +218,7 @@ Importantly, we found that supervised fine-tuning (SFT) on documents without rea
 <div class="form-group col-md-10 col-md-offset-1"><textarea id="bibtex" class="form-control" readonly>
 @misc{rlm2025,
       title={Reinforcement Learning Mid-Training for LLMs},
-      author={Eltayeb Ahmed and Anya Sims and Thomas Foster and Jakob Foerster},
+      author={Eltayeb Ahmed and Anya Sims and Thomas Foster and Tim Rocktäschel and Jakob Foerster},
       year={2025}
 }</textarea>
 </div></div>
