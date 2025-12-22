@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-12-20 Sat 13:09 -->
+<!-- 2025-12-22 Mon 14:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Reinforcement Learning Mid-Training for LLMs</title>
@@ -30,7 +30,7 @@
 <div id="main" class="container">
 
 <p>
-<div class="row"><h2 class="col-md-12 text-center"><strong><font size="+2r" color="red">Work In Progress, DO NOT DISTRIBUTE</font></strong></h2></div><br />
+<div class="row"><h2 class="col-md-12 text-center"><strong><font size="+6r" color="red">Work In Progress, DO NOT DISTRIBUTE</font></strong></h2></div><br />
 <div class="row"><h2 class="col-md-12 text-center"><strong><font size="+4r">  Reinforcement Learning Mid-Training for LLMs  </font></strong></h2></div><br />
 </p>
 
@@ -64,7 +64,7 @@
 </p>
 
 
-<div id="org4a6938a" class="figure">
+<div id="orge89c786" class="figure">
 <p><img src="figures/param_scaling_400.jpg" alt="param_scaling_400.jpg" width="100%" /><br />
 </p>
 </div>
@@ -74,9 +74,9 @@
 TL;DR: We present <b>RLM (Reinforcement Learning Mid-Training)</b>, a novel domain-agnostic method that enables RL training on datasets of unstructured documents. This breakthrough allows us to use <b>multi-billion data-point datasets</b> for RL training without requiring expensive curated data with verifiable rewards. RLM scales well with both parameters and data and opens the door to RL reasoning training at unprecedented scale.<br />
 </p>
 </blockquote>
-<div id="outline-container-org0053017" class="outline-2">
-<h2 id="org0053017">Abstract</h2>
-<div class="outline-text-2" id="text-org0053017">
+<div id="outline-container-org53cec9e" class="outline-2">
+<h2 id="org53cec9e">Abstract</h2>
+<div class="outline-text-2" id="text-org53cec9e">
 <p>
 Training LLMs with RL for reasoning capability is currently data limited. The high-quality curated data with "verifiable rewards" that is traditionally required for post-training is prohibitively expensive at scale. We present a novel domain-agnostic method to use datasets of unstructured documents for RL training. Now, pre-existing multi-billion data-point datasets can be used for RL training for reasoning.<br />
 </p>
@@ -86,9 +86,9 @@ We show that our method scales well both with parameters and with data, increasi
 </p>
 </div>
 </div>
-<div id="outline-container-org3dc8c08" class="outline-2">
-<h2 id="org3dc8c08">Method Overview</h2>
-<div class="outline-text-2" id="text-org3dc8c08">
+<div id="outline-container-orgfe104bd" class="outline-2">
+<h2 id="orgfe104bd">Method Overview</h2>
+<div class="outline-text-2" id="text-orgfe104bd">
 <p>
 The current state-of-the-art for training reasoning models involves doing reinforcement learning on problems with verifiable rewards such as maths and code competition problems. This limits our ability to train reasoning models with strong abilities outside mathematical and computational domains.<br />
 </p>
@@ -113,9 +113,9 @@ This approach is domain-agnostic and allows us to leverage vast amounts of exist
 </p>
 </div>
 </div>
-<div id="outline-container-org872822b" class="outline-2">
-<h2 id="org872822b">Data Scaling</h2>
-<div class="outline-text-2" id="text-org872822b">
+<div id="outline-container-org9341088" class="outline-2">
+<h2 id="org9341088">Data Scaling</h2>
+<div class="outline-text-2" id="text-org9341088">
 <p>
 Post-training curves starting from models without mid-training (blue), with 200 steps of mid-training (orange), and with 400 steps of mid-training (red). We find that mid-training increases performance across post-training, over a wide range of benchmarks (math, general knowledge, and code).<br />
 </p>
@@ -127,9 +127,9 @@ We trained models ranging from 1.7B to 8B parameters. Our method shows consisten
 </p>
 </div>
 </div>
-<div id="outline-container-orga108e82" class="outline-2">
-<h2 id="orga108e82">In-Task Scaling</h2>
-<div class="outline-text-2" id="text-orga108e82">
+<div id="outline-container-org2c59062" class="outline-2">
+<h2 id="org2c59062">In-Task Scaling</h2>
+<div class="outline-text-2" id="text-org2c59062">
 <p>
 After a few warm-up steps, we see the in-task performance on the RLM reward scales linearly with log-compute, reminiscent of pre-training cross-entropy scaling laws. This is a very promising result as the scaling characteristics of pre-training have been driving the explosion in LLM capabilities.<br />
 </p>
@@ -137,17 +137,17 @@ After a few warm-up steps, we see the in-task performance on the RLM reward scal
 <img src="figures/train_reward.png" style="width:100%;image-rendering:auto;">
 </div>
 </div>
-<div id="outline-container-org75db9f9" class="outline-2">
-<h2 id="org75db9f9">Post-Training Saturation</h2>
-<div class="outline-text-2" id="text-org75db9f9">
+<div id="outline-container-orgc7738ec" class="outline-2">
+<h2 id="orgc7738ec">Post-Training Saturation</h2>
+<div class="outline-text-2" id="text-orgc7738ec">
 <p>
 Examining the post-training progression in the figure above, we observe that improvements from post-training alone (blue line) eventually saturate. Critically, RLM raises this saturation point—with both 200 steps (orange) and 400 steps (red) of mid-training achieving higher performance ceilings. This demonstrates that RLM provides substantial benefits even in scenarios with unlimited post-training compute budgets, addressing a fundamental scaling limitation of conventional post-training approaches.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org49bdcfb" class="outline-2">
-<h2 id="org49bdcfb">Why SFT isn't Enough</h2>
-<div class="outline-text-2" id="text-org49bdcfb">
+<div id="outline-container-org9f8e87d" class="outline-2">
+<h2 id="org9f8e87d">Why SFT isn't Enough</h2>
+<div class="outline-text-2" id="text-org9f8e87d">
 <p>
 We conducted ablation studies on the Qwen3-8B reasoning model showing that:<br />
 </p>

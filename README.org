@@ -14,7 +14,7 @@
 #+PROPERTY:  header-args :eval never-export
 #+INCLUDE: "utils/header.org"
 
-@@html:<div class="row"><h2 class="col-md-12 text-center"><strong><font size="+2r" color="red">Work In Progress, DO NOT DISTRIBUTE</font></strong></h2></div>@@
+@@html:<div class="row"><h2 class="col-md-12 text-center"><strong><font size="+6r" color="red">Work In Progress, DO NOT DISTRIBUTE</font></strong></h2></div>@@
 @@html:<div class="row"><h2 class="col-md-12 text-center"><strong><font size="+4r">@@  Reinforcement Learning Mid-Training for LLMs  @@html:</font></strong></h2></div>@@
 
 
