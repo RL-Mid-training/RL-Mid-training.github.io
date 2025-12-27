@@ -45,7 +45,9 @@
 *
 
 #+ATTR_HTML: :width 100%
-[[file:figures/param_scaling_400.jpg]]
+[[file:figures/make_figure_1/figure1.svg]]
+
+#+html: <div class="text-center"><em>Figure 1: Overview of the Reinforcement Learning Mid-Training (RLM) method</em></div>
 
 #+begin_quote
 TL;DR: We present *RLM (Reinforcement Learning Mid-Training)*, a novel domain-agnostic method that enables RL training on datasets of unstructured documents. This breakthrough allows us to use *multi-billion data-point datasets* for RL training without requiring expensive curated data with verifiable rewards. RLM scales well with both parameters and data and opens the door to RL reasoning training at unprecedented scale.
@@ -71,6 +73,13 @@ We do this by:
 #+html: </div>
 
 This approach is domain-agnostic and allows us to leverage vast amounts of existing textual data for training reasoning capabilities.
+
+** Parameter Scaling
+
+Our method demonstrates consistent improvements across different model sizes, from 1.7B to 8B parameters, showing that RLM scales effectively with model capacity.
+
+#+ATTR_HTML: :width 100%
+[[file:figures/param_scaling_400.jpg]]
 
 ** Data Scaling
 
