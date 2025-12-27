@@ -10,7 +10,7 @@
 
 #+EXPORT_FILE_NAME: index
 
-#+HTML_HEAD: <link rel="icon" type="image/x-icon" href="imgs/favicon.ico">
+#+HTML_HEAD: <link rel="icon" type="image/png" href="imgs/favicon.png">
 #+PROPERTY:  header-args :eval never-export
 #+INCLUDE: "utils/header.org"
 
