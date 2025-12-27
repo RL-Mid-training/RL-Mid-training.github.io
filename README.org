@@ -45,7 +45,7 @@
 *
 
 #+ATTR_HTML: :width 100%
-[[file:figures/make_figure_1/figure1.svg]]
+[[file:figures/figure_1.svg]]
 
 #+html: <div class="text-center"><em>Figure 1: Overview of the Reinforcement Learning Mid-Training (RLM) method</em></div>
 
