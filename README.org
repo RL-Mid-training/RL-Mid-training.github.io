@@ -79,7 +79,7 @@ This approach is domain-agnostic and allows us to leverage vast amounts of exist
 Our method demonstrates consistent improvements across different model sizes, from 1.7B to 8B parameters, showing that RLM scales effectively with model capacity.
 
 #+ATTR_HTML: :width 100%
-[[file:figures/param_scaling_400.jpg]]
+[[file:figures/param_scaling_400.png]]
 
 ** Data Scaling
 
